@@ -1,0 +1,41 @@
+.jobs-page {
+  padding: 30px;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+.job-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.job-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.accept {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reject {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -1,0 +1,231 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap");
+
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 14px 0;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.hero {
+  padding-top: 90px;
+}
+
+.nav-container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* LOGO */
+.nav-logo span {
+  font-family: "Outfit", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #fff;
+  /* -webkit-text-stroke:1px #5b6cff; */
+}
+
+
+/* SEARCH */
+.nav-search {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 999px;
+  padding: 6px;
+  width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.nav-search select {
+  border: none;
+  background: transparent;
+  padding: 8px 14px;
+  font-size: 14px;
+  outline: none;
+}
+
+.nav-search input {
+  flex: 1;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* 🔍 NAV SEARCH SUGGESTIONS FIX */
+.nav-search-box {
+  position: relative;
+  width: 280px; /* navbar ko bada hone se roke */
+}
+
+.nav-search-box .search-suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  z-index: 9999;
+}
+
+.nav-search-box .search-suggestions div {
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.nav-search-box .search-suggestions div:hover {
+  background: #f4f6ff;
+}
+
+
+/* ACTIONS */
+/* 🔒 HARD FIX FOR CART BUTTON */
+.nav-actions button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* hover / focus par bhi kuch na aaye */
+.nav-actions button:hover,
+.nav-actions button:focus,
+.nav-actions button:active {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+.login-btn {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid #5b6cff;
+  background: white;
+  color: #5b6cff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #5b6cff;
+  color: white;
+}
+
+.logout-btn {
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: #5b6cff;
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-scrolled .nav-logo span {
+  color: #1a1a1a;
+  -webkit-text-stroke: 0;
+}
+
+
+.nav-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+.nav-location {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center; /* 🔥 THIS fixes vertical issue */
+  gap: 16px;
+}
+
+/* profile */
+.profile-wrap {
+  position: relative;
+}
+
+.profile-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f2f3ff;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+/* dropdown */
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 52px;
+  width: 180px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  padding: 8px;
+  z-index: 3000;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.profile-dropdown button:hover {
+  background: #f4f6ff;
+}
+
+.profile-dropdown .danger {
+  color: #e53935;
+}
+
+/* search btn */
+
+.nav-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-search-btn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  
+  margin-left: auto;   /* icon ko right le jaayega */
+}
