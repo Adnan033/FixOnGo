@@ -1,15 +1,21 @@
-// src/components/ServiceCard.jsx
+import { useNavigate } from "react-router-dom";
 
-function ServiceCard({ service, onAdd }) {
+function ServiceCard({ service }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/service/${service.id}`);
+  };
+
   return (
-    <div className="service-card">
+    <div className="service-card" onClick={handleClick}>
       <img src={service.image} alt={service.name} />
 
       <div className="service-overlay">
         <h4>{service.name}</h4>
-        <p>₹{service.price}</p>
+        <p>Starting ₹{service.price}</p>
 
-        <button onClick={() => onAdd(service)}>+ Add</button>
+        <button>View Providers</button>
       </div>
     </div>
   );

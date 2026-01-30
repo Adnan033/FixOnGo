@@ -1,126 +1,101 @@
-// import { useEffect, useState } from "react";
-// import { useAuth } from "../../auth/AuthContext";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../auth/AuthContext";
+import "./ProviderDashboard.css";
 
-// import { subscribeToPendingJobs } from "../../services/getJobs";
-// import { subscribeToMyJobs } from "../../services/getMyJobs";
-// // import { subscribeProviderCompletedJobs } from "../../services/getProviderEarnings";
-// import { updateJobStatus } from "../../services/updateJobStatus";
+function ProviderDashboard() {
+  const { user } = useAuth();
 
-// function ProviderDashboard() {
-//   const { user } = useAuth();
+  const [tab, setTab] = useState("pending");
+  const [jobs, setJobs] = useState([]);
 
-//   const [tab, setTab] = useState("pending");
+  // 🔹 Load jobs from localStorage
+  useEffect(() => {
+    if (!user) return;
 
-//   const [pendingJobs, setPendingJobs] = useState([]);
-//   const [myJobs, setMyJobs] = useState([]);
-//   const [completedJobs, setCompletedJobs] = useState([]);
+    const allJobs = JSON.parse(localStorage.getItem("jobs")) || [];
 
-//   // 🔹 Pending + My Jobs
-//   useEffect(() => {
-//     if (!user) return;
+    // provider-specific jobs
+    const providerJobs = allJobs.filter(
+      (job) => job.providerEmail === user.email,
+    );
 
-//     const unsubPending = subscribeToPendingJobs(setPendingJobs);
-//     const unsubMy = subscribeToMyJobs(user.uid, setMyJobs);
+    setJobs(providerJobs);
+  }, [user]);
 
-//     return () => {
-//       unsubPending();
-//       unsubMy();
-//     };
-//   }, [user]);
+  // 🔹 Job status update
+  const updateStatus = (jobId, status) => {
+    const allJobs = JSON.parse(localStorage.getItem("jobs")) || [];
 
-//   // 🔹 Completed Jobs (Earnings)
-//   useEffect(() => {
-//     if (!user) return;
+    const updated = allJobs.map((job) =>
+      job.id === jobId ? { ...job, status } : job,
+    );
 
-//     const unsubCompleted = subscribeProviderCompletedJobs(
-//       user.uid,
-//       setCompletedJobs,
-//     );
+    localStorage.setItem("jobs", JSON.stringify(updated));
 
-//     return () => unsubCompleted();
-//   }, [user]);
+    setJobs(updated.filter((j) => j.providerEmail === user.email));
+  };
 
-//   // 🔹 Earnings
-//   const totalEarnings = completedJobs.reduce(
-//     (sum, job) => sum + (job.price || 0),
-//     0,
-//   );
+  // 🔹 Filter by tab
+  const filteredJobs = jobs.filter((job) => job.status === tab);
 
-//   // 🔹 Tab-based jobs
-//   const jobs =
-//     tab === "pending" ? pendingJobs : tab === "my" ? myJobs : completedJobs;
+  // 🔹 Earnings
+  const completedJobs = jobs.filter((j) => j.status === "completed");
+  const totalEarnings = completedJobs.reduce(
+    (sum, job) => sum + (job.price || 0),
+    0,
+  );
 
-//   return (
-//     <div style={{ padding: 20 }}>
-//       <h1>Provider Dashboard</h1>
+  return (
+    <div className="provider-dashboard">
+      <h1>Provider Dashboard</h1>
 
-//       {/* Tabs */}
-//       <div style={{ marginBottom: 16 }}>
-//         <button onClick={() => setTab("pending")}>Pending Jobs</button>
-//         <button onClick={() => setTab("my")}>My Jobs</button>
-//         <button onClick={() => setTab("completed")}>Completed</button>
-//       </div>
+      {/* TABS */}
+      <div className="pd-tabs">
+        <button onClick={() => setTab("pending")}>Pending</button>
+        <button onClick={() => setTab("accepted")}>My Jobs</button>
+        <button onClick={() => setTab("completed")}>Completed</button>
+      </div>
 
-//       {/* No Jobs */}
-//       {jobs.length === 0 && <p>No jobs here</p>}
+      {/* JOB LIST */}
+      {filteredJobs.length === 0 && <p>No jobs here</p>}
 
-//       {/* Job Cards */}
-//       {jobs.map((job) => (
-//         <div
-//           key={job.id}
-//           style={{
-//             border: "1px solid #ccc",
-//             padding: 12,
-//             marginBottom: 10,
-//             borderRadius: 6,
-//           }}
-//         >
-//           <h3>{job.service}</h3>
-//           <p>Location: {job.location}</p>
-//           <p>Status: {job.status}</p>
-//           {job.price && <p>Amount: ₹{job.price}</p>}
+      {filteredJobs.map((job) => (
+        <div key={job.id} className="pd-job-card">
+          <h3>{job.service}</h3>
+          <p>Customer: {job.customerName}</p>
+          <p>Location: {job.location}</p>
+          <p>
+            Status: <b>{job.status}</b>
+          </p>
+          <p>Amount: ₹{job.price}</p>
 
-//           {/* Pending Actions */}
-//           {tab === "pending" && (
-//             <>
-//               <button
-//                 style={{ marginRight: 10 }}
-//                 onClick={() =>
-//                   updateJobStatus(job.id, {
-//                     status: "accepted",
-//                     providerId: user.uid,
-//                   })
-//                 }
-//               >
-//                 Accept
-//               </button>
+          {/* ACTIONS */}
+          {job.status === "pending" && (
+            <div className="pd-actions">
+              <button onClick={() => updateStatus(job.id, "accepted")}>
+                Accept
+              </button>
+              <button onClick={() => updateStatus(job.id, "rejected")}>
+                Reject
+              </button>
+            </div>
+          )}
 
-//               <button
-//                 onClick={() => updateJobStatus(job.id, { status: "rejected" })}
-//               >
-//                 Reject
-//               </button>
-//             </>
-//           )}
+          {job.status === "accepted" && (
+            <button onClick={() => updateStatus(job.id, "completed")}>
+              Mark Completed
+            </button>
+          )}
+        </div>
+      ))}
 
-//           {/* My Jobs */}
-//           {tab === "my" && (
-//             <button
-//               onClick={() => updateJobStatus(job.id, { status: "completed" })}
-//             >
-//               Mark Completed
-//             </button>
-//           )}
-//         </div>
-//       ))}
+      {/* EARNINGS */}
+      <hr />
+      <h2>Earnings</h2>
+      <p>Completed Jobs: {completedJobs.length}</p>
+      <p>Total Earnings: ₹{totalEarnings}</p>
+    </div>
+  );
+}
 
-//       {/* Earnings Section */}
-//       <hr />
-//       <h2>Earnings</h2>
-//       <p>Total Completed Jobs: {completedJobs.length}</p>
-//       <p>Total Earnings: ₹{totalEarnings}</p>
-//     </div>
-//   );
-// }
-
-// export default ProviderDashboard;
+export default ProviderDashboard;

@@ -2,15 +2,13 @@ import ServiceCard from "./ServiceCard";
 import { servicesData } from "../data/servicesData";
 import "./ServicesRow.css";
 
-function ServicesRow({ title, type, onAdd, servicesOverride }) {
+function ServicesRow({ title, type, servicesOverride }) {
   let services = [];
 
-  // Home rows
   if (type && servicesData[type]) {
     services = servicesData[type];
   }
 
-  // Search override
   if (servicesOverride) {
     services = servicesOverride;
   }
@@ -24,7 +22,7 @@ function ServicesRow({ title, type, onAdd, servicesOverride }) {
       ) : (
         <div className="services-scroll">
           {services.map((service) => (
-            <ServiceCard key={service.id} service={service} onAdd={onAdd} />
+            <ServiceCard key={service.id} service={service} />
           ))}
         </div>
       )}

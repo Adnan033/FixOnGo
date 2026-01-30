@@ -1,0 +1,43 @@
+.providers-page {
+  padding: 40px;
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.providers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.provider-card {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  align-items: center;
+}
+
+.provider-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eef0ff;
+}
+
+.provider-info h3 {
+  margin: 0;
+}
+
+.provider-info button {
+  margin-top: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #6c63ff;
+  color: white;
+  cursor: pointer;
+}

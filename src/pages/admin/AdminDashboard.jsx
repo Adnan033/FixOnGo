@@ -1,30 +1,64 @@
+import { useState, useEffect } from "react";
 import "./AdminDashboard.css";
 
-function AdminDashboard() {
+function AdminProviders() {
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    const data =
+      JSON.parse(localStorage.getItem("provider_applications")) || [];
+    setApplications(data);
+  }, []);
+
+  const approveProvider = (app) => {
+    const approved =
+      JSON.parse(localStorage.getItem("approved_providers")) || [];
+
+    const provider = {
+      ...app,
+      status: "approved",
+      rating: 0,
+      totalReviews: 0,
+      jobsCompleted: 0,
+      profileImage: null,
+    };
+
+    localStorage.setItem(
+      "approved_providers",
+      JSON.stringify([...approved, provider]),
+    );
+
+    removeFromPending(app.id);
+  };
+
+  const rejectProvider = (id) => {
+    removeFromPending(id);
+  };
+
+  const removeFromPending = (id) => {
+    const updated = applications.filter((a) => a.id !== id);
+    setApplications(updated);
+    localStorage.setItem("provider_applications", JSON.stringify(updated));
+  };
+
   return (
-    <div className="admin-layout">
-      <aside className="admin-sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-          <li>Dashboard</li>
-          <li>Users</li>
-          <li>Providers</li>
-          <li>Bookings</li>
-          <li>Logout</li>
-        </ul>
-      </aside>
+    <div className="admin-content">
+      <h2>Pending Provider Applications</h2>
 
-      <main className="admin-content">
-        <h1>Admin Dashboard</h1>
+      {applications.length === 0 && <p>No pending applications</p>}
 
-        <div className="admin-cards">
-          <div className="admin-card">👥 Users: 120</div>
-          <div className="admin-card">🧑‍🔧 Providers: 45</div>
-          <div className="admin-card">📦 Active Orders: 18</div>
+      {applications.map((p) => (
+        <div key={p.id} className="admin-card">
+          <h3>{p.name}</h3>
+          <p>Category: {p.category}</p>
+          <p>Phone: {p.phone}</p>
+
+          <button onClick={() => approveProvider(p)}>Approve</button>
+          <button onClick={() => rejectProvider(p.id)}>Reject</button>
         </div>
-      </main>
+      ))}
     </div>
   );
 }
 
-export default AdminDashboard;
+export default AdminProviders;

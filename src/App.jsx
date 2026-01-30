@@ -4,15 +4,16 @@ import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import ServicesRow from "./components/ServicesRow";
-import FloatingCart from "./components/FloatingCart";
-import Toast from "./components/Toast";
 import Footer from "./components/Footer";
 
 import SearchResults from "./pages/SearchResults";
 import BecomeProvider from "./pages/BecomeProvider";
+import ServiceProviders from "./pages/ServiceProviders";
 
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -41,14 +42,31 @@ function App() {
         onLogout={handleLogout}
       />
 
-      {/* 🔥 BLUR BACKGROUND WHEN MODAL OPEN */}
-      <div className={showLogin || showSignup ? "blurred" : ""}>
-        <Hero />
-        <ServicesRow title="Popular Services" type="popular" />
-        <ServicesRow title="Trending Near You" type="trending" />
-        <ServicesRow title="Home Essentials" type="essentials" />
-        <Footer />
-      </div>
+      {/* ✅ ALL ROUTES MUST BE INSIDE <Routes> */}
+      <Routes>
+        {/* HOME */}
+        <Route
+          path="/"
+          element={
+            <div className={showLogin || showSignup ? "blurred" : ""}>
+              <Hero />
+              <ServicesRow title="Popular Services" type="popular" />
+              <ServicesRow title="Trending Near You" type="trending" />
+              <ServicesRow title="Home Essentials" type="essentials" />
+              <Footer />
+            </div>
+          }
+        />
+
+        {/* SEARCH */}
+        <Route path="/search" element={<SearchResults />} />
+
+        {/* SERVICE → PROVIDERS LIST */}
+        <Route path="/service/:serviceId" element={<ServiceProviders />} />
+
+        {/* BECOME PROVIDER */}
+        <Route path="/become-provider" element={<BecomeProvider />} />
+      </Routes>
 
       {/* 🔐 LOGIN MODAL */}
       {showLogin && (
