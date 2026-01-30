@@ -1,0 +1,48 @@
+/* ROOT PAGE */
+.bp-page {
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO SECTION */
+.bp-hero {
+  position: relative;
+  z-index: 2;
+}
+
+/* BENEFITS + STEPS */
+.bp-benefits,
+.bp-steps {
+  position: relative;
+  z-index: 2;
+}
+
+/* PRIMARY BUTTONS */
+.bp-primary {
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* APPLY NOW BUTTON (BOTTOM ONE) */
+.bp-page > button {
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* VERY IMPORTANT:
+   If any overlay exists above this page,
+   it must NOT capture clicks */
+.cart-overlay,
+.nav,
+.nav-scrolled {
+  pointer-events: auto;
+}
+
+/* BUT if you have a background blur overlay */
+.overlay,
+.blur-layer,
+.modal-backdrop {
+  pointer-events: none;
+}

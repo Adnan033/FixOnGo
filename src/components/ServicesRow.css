@@ -1,0 +1,89 @@
+.services-row {
+  padding: 30px 60px;
+}
+
+.services-row h2 {
+  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.services-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+}
+
+.services-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.services-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+
+.service-card {
+  min-width: 220px;
+  height: 300px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.service-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card:hover {
+  transform: scale(1.08);
+  z-index: 10;
+}
+
+.service-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.2)
+  );
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  color: white;
+  transition: opacity 0.3s ease;
+}
+
+.service-card:hover .service-overlay {
+  opacity: 1;
+}
+
+.service-overlay button {
+  margin-top: 8px;
+  background: #6c63ff;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 🔥 SEARCH PAGE FIX */
+.search-mode .service-overlay {
+  opacity: 1; /* text always visible */
+}
+
+.search-mode .service-card {
+  min-width: 260px;
+  height: 300px;
+}

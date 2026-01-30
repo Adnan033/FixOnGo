@@ -1,2 +1,8 @@
 # FixOnGo
-This Repo is for my FixOnGo website
+
+Frontend for FixOnGo home service platform.
+
+- React + Vite
+- Auth (Login / Signup)
+- Service Provider flow
+- Cart & Booking UI
